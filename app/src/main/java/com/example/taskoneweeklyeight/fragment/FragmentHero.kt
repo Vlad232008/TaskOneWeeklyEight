@@ -29,24 +29,16 @@ class FragmentHero : Fragment(), HeroAdapter.Listener {
     private val URL_HEROINFO = "https://api.opendota.com/api/heroStats"
     private val okHttpClient = OkHttpClient()
     private val file: String = "DotsHero"
-    private lateinit var adapter: HeroAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHeroBinding.inflate(inflater, container, false)
+    ): View {
+        binding = FragmentHeroBinding
+            .inflate(inflater, container, false)
         readJson()
-        return inflater.inflate(R.layout.fragment_hero, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         initRcV()
+        return binding.root
     }
 
     private fun getHeroInfo() {
@@ -124,10 +116,7 @@ class FragmentHero : Fragment(), HeroAdapter.Listener {
 
     private fun initRcV() = with(binding) {
         rcView.layoutManager = LinearLayoutManager(activity)
-                // StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            //LinearLayoutManager(activity)
-        adapter = HeroAdapter(this@FragmentHero, heroInfo)
-        rcView.adapter = adapter
+        rcView.adapter = HeroAdapter(this@FragmentHero, heroInfo)
     }
 
     companion object {
